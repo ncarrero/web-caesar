@@ -11,19 +11,19 @@ form = """
 <html>
     <head>
         <style>
-            form {
+            form {{
                 background-color: #eee;
                 padding: 20px;
                 margin: 0 auto;
                 width: 540px;
                 font: 16px sans-serif;
                 border-radius: 10px;
-            }
-            textarea {
+            }}
+            textarea {{
                 margin: 10px 0;
                 width: 540px;
                 height: 120px;
-            }
+            }}
         </style>
     </head>
     <body>
@@ -37,7 +37,7 @@ form = """
             <br>
 
             <label>Enter your sentence below: 
-                <textarea name="text"></textarea>
+                <textarea name="text">{0}</textarea>
             </label>
 
             <br>
@@ -52,7 +52,7 @@ form = """
 @app.route("/") #decorator: creates a mapping between the path, in this case root or / and 
                 #function that's about to be defined below
 def index():    #define index as a function with 0 variables
-        return form    #function returns the form
+        return form.format('')    #function returns the form
 
 #encrypt the old message to the new message by rotating it a certain number of characters
 @app.route('/', methods=['POST'])
@@ -61,7 +61,7 @@ def encrypt_message():
     rot = int(rotstr)
     text = request.form['text']
     new_text = encrypt(text, rot)
-    return '<h1>' + new_text + '</h1>'
+    return form.format(new_text)
 
 app.run()   #pass control to Flask object; run function loops forever & never returns so it has 
             #to go last; carries out responsibilities of web server, listening for requests & 
